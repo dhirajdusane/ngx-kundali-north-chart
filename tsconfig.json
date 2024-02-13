@@ -10,6 +10,11 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
+    "paths": {
+      "ngx-kundali-north-chart": [
+        "./dist/ngx-kundali-north-chart"
+      ]
+    },
     "esModuleInterop": true,
     "sourceMap": true,
     "declaration": false,
