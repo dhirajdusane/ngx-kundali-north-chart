@@ -6,6 +6,7 @@
   "homepage": "",
   "license":"Apache-2.0",
   "displayName": "Kundali chart North-Indian style",
+  "private": false,
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -14,7 +15,6 @@
     "test": "ng test",
     "lint": "ng lint"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "^17.1.0",
     "@angular/common": "^17.1.0",
