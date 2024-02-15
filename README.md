@@ -1,6 +1,8 @@
 # NgxKundaliNorthChart
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.2.
+To reuse this component please use command. `npm i ngx-kundali-north-chart`
+working demo can be found at: ......
 
 ## Development server
 
