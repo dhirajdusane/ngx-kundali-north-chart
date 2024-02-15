@@ -1,6 +1,6 @@
 {
   "name": "ngx-kundali-north-chart",
-  "version": "1.24.2",
+  "version": "1.24.3",
   "peerDependencies": {
     "@angular/common": "^17.1.0",
     "@angular/core": "^17.1.0"
