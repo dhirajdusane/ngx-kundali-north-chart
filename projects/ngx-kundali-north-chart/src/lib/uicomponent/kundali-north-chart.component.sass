@@ -1,0 +1,23 @@
+$hover-color: #FFE6A4
+$border-color: #DEDEDE
+$normal-color: #FDFAF2
+$select-color: #F1B076
+
+path
+    fill : $normal-color
+    stroke: $border-color
+
+path:hover 
+    fill : $hover-color
+
+path:mouse
+    fill : $hover-color
+
+svg
+    user-select: none
+    
+.selected-path
+    fill : $select-color
+
+text
+    pointer-events: none

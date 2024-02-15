@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NgxKundaliNorthChartComponent } from './ngx-kundali-north-chart.component';
+import { KundaliNorthChartComponent } from './kundali-north-chart.component';
 
 describe('NgxKundaliNorthChartComponent', () => {
-  let component: NgxKundaliNorthChartComponent;
-  let fixture: ComponentFixture<NgxKundaliNorthChartComponent>;
+  let component: KundaliNorthChartComponent;
+  let fixture: ComponentFixture<KundaliNorthChartComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NgxKundaliNorthChartComponent]
+      imports: [KundaliNorthChartComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(NgxKundaliNorthChartComponent);
+    fixture = TestBed.createComponent(KundaliNorthChartComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
