@@ -1,0 +1,30 @@
+%mark-background
+    background-color: aqua
+
+%layout-block
+    display: block
+    margin-left: auto
+    margin-right: auto
+
+%hand-cursor
+    cursor: pointer
+
+.link-anchor
+    @extend %hand-cursor
+
+mat-icon
+    @extend %hand-cursor
+    margin-left: 15px
+
+.center-layout
+    @extend %layout-block
+    width: 75%
+    //@extend %mark-background
+
+.container-layout
+    @extend %layout-block
+    height: 80vh
+    
+a:link, a:visited, a:hover, a:active 
+    text-decoration: none
+    color: white
