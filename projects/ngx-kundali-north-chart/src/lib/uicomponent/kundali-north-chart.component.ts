@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { chartdata } from '../models/chartdata';
 import { bhav } from '../models/bhav';
+import { PlanetService } from '../services/planet/planet.service';
+import { CalculationService } from '../services/displaycalculation/calculation.service';
 
 @Component({
   selector: 'lib-kchart-north',
@@ -9,7 +11,7 @@ import { bhav } from '../models/bhav';
   templateUrl: './kundali-north-chart.component.html',
   styleUrl: './kundali-north-chart.component.sass'
 })
-export class KundaliNorthChartComponent  implements OnInit {
+export class KundaliNorthChartComponent implements OnInit {
   @Input() data!: chartdata;
   a = '';
   b = '';
@@ -108,7 +110,11 @@ export class KundaliNorthChartComponent  implements OnInit {
   l5 = ''
   l6 = ''
 
-  constructor() {
+  planetService: PlanetService
+  calculationService: CalculationService
+  constructor(planetService: PlanetService, calculationService: CalculationService) {
+    this.calculationService = calculationService;
+    this.planetService = planetService;
   }
 
   ngOnInit() {
@@ -116,93 +122,89 @@ export class KundaliNorthChartComponent  implements OnInit {
   }
 
   setBhavData(data: chartdata) {
-    if (data == undefined || this.data.houses == undefined) return;
-    
+    if (data == undefined) return;
+
     //console.log(JSON.stringify(data));
     // eslint-disable-next-line no-debugger
     //debugger;
+    const space = ' ';
+    this.a4 += space + 'Lagna';
 
-    let i = 0;
-    for (const item of this.data.houses) {
-      i++;
-      this.setBhav(item,i);
+    for (let i = 0; i < this.data.planets.length; i++) {
+      try {
+        const varName = this.getBhavaIndex(this.data.planets[i] - 1);
+        eval('this.' + varName + '3 += space + this.planetService.getPlanetText(i)');
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    let lords = this.calculationService.getBhavesh(this.data.lagna);
+    for(let i = 0; i<12;i++){
+      const varName = this.getBhavaIndex(i);
+      eval('this.' + varName + ' += space + lords[i]');
+    }
+
+    for(let i = 0; i<12;i++){
+      const varName = this.getBhavaIndex(i);
+
+      const index = this.calculationService.getRashiLordIndex(i + this.data.lagna);
+      let item = this.getBhavArudha(this.calculationService.getArudhaPada(i + 1, this.data.planets[index]));
+      eval('this.' + varName + '2 += space + item');
     }
   }
 
-  setBhav(bhavData: bhav, varIndex: number) {
+  getBhavaIndex(varIndex: number) {
     let varName = ''
 
     switch (varIndex) {
-      case 1:
+      case 0:
         varName = 'a';
         break;
-      case 2:
+      case 1:
         varName = 'b';
         break;
-      case 3:
+      case 2:
         varName = 'c';
         break;
-      case 4:
+      case 3:
         varName = 'd';
         break;
-      case 5:
+      case 4:
         varName = 'e';
         break;
-      case 6:
+      case 5:
         varName = 'f';
         break;
-      case 7:
+      case 6:
         varName = 'g';
         break;
-      case 8:
+      case 7:
         varName = 'h';
         break;
-      case 9:
+      case 8:
         varName = 'i';
         break;
 
-      case 10:
+      case 9:
         varName = 'j';
         break;
-      case 11:
+      case 10:
         varName = 'k';
         break;
-      case 12:
+      case 11:
         varName = 'l';
         break;
     }
-
-    
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    let space = ' ';
-
-    eval('this.' + varName + ' = bhavData.rashi.toString()');
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    for (const item of bhavData.planets) {
-      //chartdata[''] = 
-      //this[varName + '3'] = '';
-      //eval('this.' + varName + '3') += space + item;
-      eval('this.' + varName + '3 += space + item');
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    for (const item of bhavData.bhavarudha) {
-      eval('this.' + varName + '2 += space + item');
-    }
-    
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    for (const item of bhavData.nature) {
-      eval('this.' + varName + '4 += space + item');
-    }
+    return varName;
   }
 
-  getBhavArudha(item:number){
-    return ' A'+ item;
+  getBhavArudha(item: number) {
+    return ' A' + item;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  houseClick(changes:any){
+  houseClick(changes: any) {
     //debugger;
 
     if (changes.currentTarget.classList.contains('selected-path')) {

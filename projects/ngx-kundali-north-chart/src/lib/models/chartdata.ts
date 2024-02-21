@@ -1,5 +1,4 @@
-import { bhav } from "./bhav";
-
 export class chartdata{
-    houses!:bhav[];
+    planets: number[] = [1,1,1,1,1,1,1,1,1];
+    lagna!: number;
 }

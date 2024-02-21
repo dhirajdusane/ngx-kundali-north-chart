@@ -8,11 +8,11 @@ function getArudhaPada (houseNumber, planetIndex) {
 }	
 	
 function argala (planetIndex, isVakri) {
-	let argala = [2,4,5,11];
+	let argalaArr = [2,4,5,11];
 	for ( let i = 0; i < 4 ; i++ ) {
-		argala[i] = normalizeTo12(planetIndex - 1 + argala[i]);
+		argalaArr[i] = normalizeTo12(planetIndex - 1 + argalaArr[i]);
 	}
-	return argala;
+	return argalaArr;
 }
 
 function virodhArgala (planetIndex) {

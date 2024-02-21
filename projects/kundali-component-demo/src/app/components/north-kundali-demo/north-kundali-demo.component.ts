@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatCardModule} from '@angular/material/card';
 import { KundaliNorthChartComponent, chartdata } from 'ngx-kundali-north-chart';
-import * as jsonChartdata from '../../../assets/dhiruBhai.json'
+import * as jsonChartdata from './dhiruBhaiV2.json'
 
 @Component({
   selector: 'app-north-kundali-demo',
