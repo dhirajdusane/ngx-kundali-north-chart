@@ -1,9 +1,13 @@
 {
   "name": "ngx-kundali-north-chart",
-  "version": "1.24.5",
+  "version": "1.24.6",
   "author": "Dhiraj Dusane <dhirajdusane@gmail.com>",
   "description": "Vedic Kundali North Indian Style chart component. Easily reusable.",
-  "homepage": "",
+  "homepage": "https://www.vediccs.com/kundali-north",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dhirajdusane/ngx-kundali-north-chart"
+  },
   "license":"Apache-2.0",
   "displayName": "Kundali chart North-Indian style",
   "peerDependencies": {
