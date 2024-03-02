@@ -6,9 +6,9 @@
   "homepage": "https://www.vediccs.com/kundali-north",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dhirajdusane/ngx-kundali-north-chart"
+    "url": "git+https://github.com/dhirajdusane/ngx-kundali-north-chart.git"
   },
-  "license":"Apache-2.0",
+  "license": "Apache-2.0",
   "displayName": "Kundali chart North-Indian style",
   "peerDependencies": {
     "@angular/common": "^17.1.0",
