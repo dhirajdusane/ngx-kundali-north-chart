@@ -1,26 +1,31 @@
 <div class="container-div">
-  <h1>North indian Style Kundali Component</h1>
+  <h1>North-Indian Style Kundali Component</h1>
 
   <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
     <mat-tab label="Demo">
-      <mat-card class="k-card" style="max-width: 600px; align-content: center;margin: 3%;">
-        <mat-card-header>          
-          <mat-card-title>Lagna Kundali</mat-card-title>
-          <!-- <mat-card-subtitle>Also called as D1</mat-card-subtitle> -->
-        </mat-card-header>
-        <!-- <app-svgnorthchart [data]="staticChartData" style="border-color: black; border-width: 5px;"></app-svgnorthchart> -->
-        <lib-kchart-north [data]="staticChartData" style="border-color: black; border-width: 5px;" />
-        <!-- <mat-card-content>
-              <p>
-                <app-svgnorthchart [data]="staticChartData" style="border-color: black; border-width: 5px;"></app-svgnorthchart>      </p>
-            </mat-card-content> -->
-        <!-- <mat-card-actions>
-              <button mat-button>LIKE</button>
-              <button mat-button>SHARE</button>
-            </mat-card-actions> -->
-      </mat-card>
+      <div style="display: flex;">
+        <div style="flex-grow: 0.5  ;">
+          <mat-card class="k-card" style="max-width: 600px; align-content: center;margin: 3%;">
+            <mat-card-header>
+              <mat-card-title>Lagna Kundali</mat-card-title>
+            </mat-card-header>
+            <lib-kchart-north [data]="staticChartData" style="border-color: black; border-width: 5px;" />
+          </mat-card>
+        </div>
+        <div style="display: flex; flex-direction: column; ">
+          <div style="display: flex; flex-direction: column;  max-height: 20;">
+           <b>Install:</b>
+            <p class="flex-auto truncate db ma0"><code>npm i <!-- -->ngx-kundali-north-chart</code></p>
+          </div>
+          <div style="display: flex; flex-direction: column;  max-height: 20;">
+            <b>npm:</b>
+            <p><a target="_blank" href="https://www.npmjs.com/package/ngx-kundali-north-chart">ngx-kundali-north-chart</a></p>
+           </div>
+          <div>
+          </div>
+        </div>
+      </div>
     </mat-tab>
-    <mat-tab label="Package">Coming soon!</mat-tab>
-    <mat-tab label="About">Coming soon!</mat-tab>
+    <mat-tab label="About"><app-about /></mat-tab>
   </mat-tab-group>
 </div>
