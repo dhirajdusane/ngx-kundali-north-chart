@@ -11,7 +11,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "buildall": "ng build kundali-component-demo && ng build ngx-kundali-north-chart",
+    "buildall": "ng build ngx-kundali-north-chart && ng build kundali-component-demo",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint"
