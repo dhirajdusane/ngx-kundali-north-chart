@@ -9,34 +9,39 @@ export class CalculationService {
 
   normalizeTo12(index: number) {
     if (index > 12) return index - 12;
+    else if(index < 0) return index * -1;
     else return index;
   }
 
-  getBhavesh(lagna: number) {
-    const bavLords: number[] = [];
+  getBhavaRashiArray(lagna: number) {
+    const bavaRashis: number[] = [];
     for (let i = 0; i < 12; i++) {
-      bavLords.push(this.normalizeTo12(i + lagna + 1))
+      bavaRashis.push(this.normalizeTo12(i + lagna))
     }
-    return bavLords;
+    return bavaRashis;
   }
 
+  getArudhaPada(houseNumber: number, planetHouseNumber: number) {
+    if (planetHouseNumber == houseNumber ||
+       this.normalizeTo12(houseNumber + 6) == planetHouseNumber)
+      return this.normalizeTo12(planetHouseNumber + 9);
 
-  getArudhaPada(houseNumber: number, planetIndex: number) {
-    return this.normalizeTo12(((planetIndex - houseNumber) + planetIndex))
+    console.log('houeNumber : '+ houseNumber + ' planetHouse :' + planetHouseNumber);
+
+    return this.normalizeTo12(((planetHouseNumber - houseNumber) + planetHouseNumber))
   }
 
-  getArudhaPadaLords(lagnaRashiNumber: number, planets: number[]) {
-    const arudPadas: number[] = [];
-    for (let i = 0; i < 12; i++) {
-      const index = this.getRashiLordIndex(i + lagnaRashiNumber);
-      arudPadas.push(this.getArudhaPada(i + 1, planets[index]));
+  getArudhaPadaArray(planets:number[], lagna:number){
+    const arudhas:number[] = [];
+      for (let i = 0; i < 12; i++) {
+        const index = this.getRashiLordIndex(i + lagna);
+        arudhas.push(this.getArudhaPada(i + 1, planets[index]));
+      }
+      return arudhas;
     }
-
-    return arudPadas;
-  }
 
   getRashiLordIndex(rashi: number) {
-    switch (rashi) {
+    switch (this.normalizeTo12(rashi)) {
       case 1:
       case 8:
         return 4;

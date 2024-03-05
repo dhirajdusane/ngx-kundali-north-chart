@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { chartdata } from '../models/chartdata';
-import { bhav } from '../models/bhav';
+//import { bhava } from '../models/bhava';
 import { PlanetService } from '../services/planet/planet.service';
 import { CalculationService } from '../services/displaycalculation/calculation.service';
 
@@ -118,10 +118,10 @@ export class KundaliNorthChartComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.setBhavData(this.data);
+    this.setBhavaData(this.data);
   }
 
-  setBhavData(data: chartdata) {
+  setBhavaData(data: chartdata) {
     if (data == undefined) return;
 
     //console.log(JSON.stringify(data));
@@ -139,18 +139,20 @@ export class KundaliNorthChartComponent implements OnInit {
       }
     }
 
-    let lords = this.calculationService.getBhavesh(this.data.lagna);
-    for(let i = 0; i<12;i++){
+    const lords = this.calculationService.getBhavaRashiArray(this.data.lagna);
+    for (let i = 0; i < 12; i++) {
       const varName = this.getBhavaIndex(i);
       eval('this.' + varName + ' += space + lords[i]');
     }
 
-    for(let i = 0; i<12;i++){
-      const varName = this.getBhavaIndex(i);
+    let arudhas = this.calculationService.getArudhaPadaArray(this.data.planets, this.data.lagna);
+    console.log(arudhas);
 
-      const index = this.calculationService.getRashiLordIndex(i + this.data.lagna);
-      let item = this.getBhavArudha(this.calculationService.getArudhaPada(i + 1, this.data.planets[index]));
-      eval('this.' + varName + '2 += space + item');
+    //Set adrudha padas of all houses
+    for (let i = 0; i < 12; i++) {
+      const varName = this.getBhavaIndex(arudhas[i] - 1);
+      const txt = this.getBhavaArudha(i + 1);
+      eval('this.' + varName + '2 += space + txt');
     }
   }
 
@@ -199,11 +201,15 @@ export class KundaliNorthChartComponent implements OnInit {
     return varName;
   }
 
-  getBhavArudha(item: number) {
-    return ' A' + item;
+  getBhavaArudha(item: number) {
+    if (item == 1)
+      return ' AL';
+    else
+      return ' A' + item;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  previousTarget: any = undefined;
   houseClick(changes: any) {
     //debugger;
 
@@ -211,7 +217,11 @@ export class KundaliNorthChartComponent implements OnInit {
       changes.currentTarget.classList.remove('selected-path')
     }
     else {
+      if (this.previousTarget != undefined)
+        this.previousTarget.classList.remove('selected-path');
+
       changes.currentTarget.classList.add('selected-path')
+      this.previousTarget = changes.currentTarget;
     }
 
     //console.log(changes);
