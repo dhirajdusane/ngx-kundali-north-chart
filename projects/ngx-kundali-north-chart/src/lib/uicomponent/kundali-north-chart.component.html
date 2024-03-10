@@ -71,60 +71,21 @@
             inkscape:label="TH9" />
       </g>
       <g inkscape:groupmode="layer" id="HouseLords" inkscape:label="HouseLords" class="svh-g-1">
-         <text xml:space="preserve" class="house-lord-text" x="49.770706" y="47.927189" id="L1" inkscape:label="L1">
-            <tspan sodipodi:role="line" id="tspan177" class="house-lord-tspan" x="49.770706" y="47.927189"><a> {{a}}</a>
-            </tspan>
-         </text>
-         <text xml:space="preserve" class="house-lord-text" x="23.777079" y="23.333328" id="L2" inkscape:label="L2">
-            <tspan sodipodi:role="line" id="tspan178" x="23.777079" y="23.333328"> {{b}}
-            </tspan>
-         </text>
-         <text xml:space="preserve" class="house-lord-text" x="19.649132" y="27.842278" id="L3" inkscape:label="L3">
-            <tspan sodipodi:role="line" id="tspan179" x="19.649132" y="27.842278">{{c}}
-            </tspan>
-         </text>
-         <text xml:space="preserve" class="house-lord-text" x="44.924065" y="53.531487" id="L4" inkscape:label="L4">
-            <tspan sodipodi:role="line" id="tspan180" x="44.924065" y="53.531487">{{d}}
-            </tspan>
-         </text>
-         <text xml:space="preserve" class="house-lord-text" x="19.324745" y="78.707085" id="L5" inkscape:label="L5">
-            <tspan sodipodi:role="line" id="tspan181" x="19.324745" y="78.707085">{{e}}
-            </tspan>
-         </text>
-         <text xml:space="preserve" class="house-lord-text" x="24.867153" y="83.253082" id="L6" inkscape:label="L6">
-            <tspan sodipodi:role="line" id="tspan182" x="24.867153" y="83.253082">{{f}}
-            </tspan>
-         </text>
-         <text xml:space="preserve" class="house-lord-text" x="50.344601" y="58.20121" id="L7" inkscape:label="L7">
-            <tspan sodipodi:role="line" id="tspan183" x="50.344601" y="58.20121">{{g}}
-            </tspan>
-         </text>
-         <text xml:space="preserve" class="house-lord-text" x="74.839134" y="82.329918" id="L8" inkscape:label="L8">
-            <tspan sodipodi:role="line" id="tspan184" x="74.839134" y="82.329918">{{h}}
-            </tspan>
-         </text>
-         <text xml:space="preserve" class="house-lord-text" x="78.969727" y="77.950592" id="L9" inkscape:label="L9">
-            <tspan sodipodi:role="line" id="tspan185" x="78.969727" y="77.950592">{{i}}
-            </tspan>
-         </text>
-         <text xml:space="preserve" class="house-lord-text" x="54.303673" y="53.549385" id="L10" inkscape:label="L10">
-            <tspan sodipodi:role="line" id="tspan186" x="54.303673" y="53.549385">{{j}}
-            </tspan>
-         </text>
-         <text xml:space="preserve" class="house-lord-text" x="79.894035" y="28.795219" id="L11" inkscape:label="L11">
-            <tspan sodipodi:role="line" id="tspan187" x="79.894035" y="28.795219">{{k}}
-            </tspan>
-         </text>
-         <text xml:space="preserve" class="house-lord-text" x="74.995705" y="23.708815" id="L12" inkscape:label="L12">
-            <tspan sodipodi:role="line" id="tspan188" x="74.995705" y="23.708815">{{l}}
-            </tspan>
-         </text>
+
+         <!-- Overlaying shapes -->
+         <ng-container *ngFor="let bhava of bhavas">
+            <text xml:space="preserve" class="house-lord-text" [attr.x]="bhava.rashi.X" [attr.y]="bhava.rashi.Y">
+               <tspan sodipodi:role="line" class="house-lord-tspan" [attr.x]="bhava.rashi.X" [attr.y]="bhava.rashi.Y">
+                  <a>{{bhava.rashi.rashiNumber}}</a>
+               </tspan>
+            </text>
+         </ng-container>
       </g>
       <g inkscape:groupmode="layer" id="Occupant" inkscape:label="Occupant" class="svh-g-1">
-         <ng-container *ngFor="let pathLine of Houses">
+         <ng-container *ngFor="let bhava of bhavas">
             <text class="svg-base-text">
-               <textPath [attr.xlink:href]="pathLine">
-                  <tspan *ngFor="let item of H1Items">
+               <textPath [attr.xlink:href]="bhava.pathName">
+                  <tspan *ngFor="let item of bhava.items">
                      <tspan><a> {{item}}</a></tspan>
                   </tspan>
                </textPath>

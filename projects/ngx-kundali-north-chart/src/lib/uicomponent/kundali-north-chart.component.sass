@@ -2,22 +2,43 @@ $hover-color: #FFE6A4
 $border-color: #DEDEDE
 $normal-color: #FDFAF2
 $select-color: #F1B076
+$text-color: #b82960
 
 path
-    fill : $normal-color
+    fill: $normal-color
     stroke: $border-color
 
-path:hover 
-    fill : $hover-color
+path:hover
+    fill: $hover-color
 
 path:mouse
-    fill : $hover-color
+    fill: $hover-color
 
 svg
     user-select: none
-    
+
 .selected-path
-    fill : $select-color
+    fill: $select-color
 
 text
     pointer-events: none
+
+.svg-base-text
+    font-size: 4px
+    fill: $text-color
+    stroke: $text-color
+    stroke-width: 0.2
+
+.svh-g-1
+    display: inline
+
+.house-lord-text
+    font-size: 3.175px
+    fill: none
+    stroke: #000000
+    stroke-width: 0.264999
+
+.text-fill-path
+    fill: none
+    stroke: none
+    stroke-width: 0
