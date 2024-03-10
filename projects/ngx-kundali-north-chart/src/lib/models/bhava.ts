@@ -1,4 +1,6 @@
 import { Rashi } from "./rashi";
+import { House } from "./house";
+//import { Occupant } from "./occupant";
 
 // export class bhava{
 //     planets: string[] = [];
@@ -7,21 +9,42 @@ import { Rashi } from "./rashi";
 //     nature:string[] = [];
 // }
 
-export class Bhava{
+export class Occupant {
+    txt!: string;
+    isPlanet!: boolean;
+    parentHouse!: Bhava;
+    isArudha!: boolean;
+}
 
-    next!:Bhava;
-    previous!:Bhava;
+export class Bhava {
 
-    constructor(){        
+    next!: Bhava;
+    previous!: Bhava;
+
+    constructor() {
     }
 
-    items: string[] = [];    
+    items: Occupant[] = [];
     rashi!: Rashi;
-    isLagna!:boolean;
-    pathName!:string;
-    index!:number;
+    house!: House;
+    isLagna!: boolean;
+    pathName!: string;
+    index!: number;
 
+    addOccupant(name: string) {
+        const o = new Occupant();
+        o.txt = name;
+        o.parentHouse = this;
+        this.items.push(o);
+    }
 
+    getNext(i:number){
+        let itemToReturn = this.previous;
+        for (let j = 0;j < i;j++){
+            itemToReturn = itemToReturn.next;
+        }
+        return itemToReturn;
+    }
 }
 
 

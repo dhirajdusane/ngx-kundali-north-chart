@@ -6,32 +6,12 @@
       xmlns:svg="http://www.w3.org/2000/svg">
       <defs id="defs1" />
       <g inkscape:groupmode="layer" id="HouseWiseLayer" inkscape:label="HouseWiseLayer" class="svh-g-1">
-         <path d="M 52.676371,2.5858887 77.138444,27.573511 102.1116,2.6019084 v -0.01602 z" class="cH cH12" id="H12"
-            (click)="houseClick($event)" inkscape:label="H12" />
-         <path d="m 77.131122,28.031481 24.987918,25.06526 V 3.494803 Z" class="cH cH11" id="H11"
-            (click)="houseClick($event)" inkscape:label="H11" />
-         <path d="M 102.11789,53.124662 77.271269,77.085714 102.11789,101.55435 Z" class="cH cH9" id="H9"
-            (click)="houseClick($event)" inkscape:label="H9" />
-         <path d="M 102.13407,102.3831 77.308492,76.933825 51.942578,102.39792 h 50.191492 z" class="cH cH8" id="H8"
-            (click)="houseClick($event)" inkscape:label="H8" />
-         <path d="M 51.873081,102.37576 27.751266,77.30897 3.1098023,102.37576 Z" class="cH cH6" id="H6"
-            (click)="houseClick($event)" inkscape:label="H6" />
-         <path d="M 2.400887,102.30745 27.395744,77.314144 2.390035,51.771 v 50.53645 z" class="cH cH5" id="H5"
-            (click)="houseClick($event)" inkscape:label="H5" />
-         <path d="M 2.390035,51.660413 27.194722,27.368355 2.4143229,2.5858887 H 2.390035 Z" class="cH cH3" id="H3"
-            (click)="houseClick($event)" inkscape:label="H3" />
-         <path d="M 3.1224062,2.5799472 27.557874,27.3742 52.510557,2.5799472 Z" class="cH cH2" id="H2"
-            (click)="houseClick($event)" inkscape:label="H2" />
-         <path d="M 77.138444,27.573511 52.267094,52.443827 77.277454,77.456771 102.1116,53.135775 v -0.05271 z"
-            class="cH cH10" id="H10" (click)="houseClick($event)" inkscape:label="H10" />
-         <path
-            d="M 51.902775,102.30745 77.277454,77.456771 52.267094,52.443827 27.395744,77.314144 51.863501,102.30745 Z"
-            class="cH cH7" id="H7" (click)="houseClick($event)" inkscape:label="H7" />
-         <path d="M 2.390035,51.771 27.395744,77.314144 52.267094,52.443827 27.194722,27.368355 2.390035,51.660413 Z"
-            class="cH cH4" id="H4" (click)="houseClick($event)" inkscape:label="H4" />
-         <path d="M 52.676371,2.5858887 H 52.499638 L 27.194722,27.368355 52.267094,52.443827 77.138444,27.573511 Z"
-            class="cH cH1" id="H1" (click)="houseClick($event)" inkscape:label="H1">
-         </path>
+         <ng-container *ngFor="let bhava of bhavas">
+            <path [attr.d]="bhava.house.d" class="cH cH12" 
+            [class.code-selected-path-1]="bhava.house.isActive1"
+            [class.code-selected-path-2]="bhava.house.isActive2"
+            (click)="houseClick($event, bhava)" />
+         </ng-container>
       </g>
       <g inkscape:groupmode="layer" id="FillPath" inkscape:label="FillPath" class="svh-g-1">
          <path id="TH1" class="text-fill-path"
@@ -83,10 +63,10 @@
       </g>
       <g inkscape:groupmode="layer" id="Occupant" inkscape:label="Occupant" class="svh-g-1">
          <ng-container *ngFor="let bhava of bhavas">
-            <text class="svg-base-text">
+            <text>
                <textPath [attr.xlink:href]="bhava.pathName">
                   <tspan *ngFor="let item of bhava.items">
-                     <tspan><a> {{item}}</a></tspan>
+                     <a class="a-item-text" (click)="itemClick($event,item)"> {{item.txt}} </a>
                   </tspan>
                </textPath>
             </text>

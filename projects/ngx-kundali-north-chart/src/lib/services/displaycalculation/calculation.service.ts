@@ -13,13 +13,13 @@ export class CalculationService {
     else return index;
   }
 
-  getBhavaRashiArray(lagna: number) {
-    const bavaRashis: number[] = [];
-    for (let i = 0; i < 12; i++) {
-      bavaRashis.push(this.normalizeTo12(i + lagna))
-    }
-    return bavaRashis;
-  }
+  // getBhavaRashiArray(lagna: number) {
+  //   const bavaRashis: number[] = [];
+  //   for (let i = 0; i < 12; i++) {
+  //     bavaRashis.push(this.normalizeTo12(i + lagna))
+  //   }
+  //   return bavaRashis;
+  // }
 
   getArudhaPada(houseNumber: number, planetHouseNumber: number) {
     if (planetHouseNumber == houseNumber ||

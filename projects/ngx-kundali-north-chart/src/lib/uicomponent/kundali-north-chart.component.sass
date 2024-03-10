@@ -1,8 +1,11 @@
 $hover-color: #FFE6A4
 $border-color: #DEDEDE
 $normal-color: #FDFAF2
-$select-color: #F1B076
+$user-select-color: #F1B076
 $text-color: #b82960
+$item-stroke: #000000
+$select-color-1: #FFADC7
+$select-color-2: #BDBCBC
 
 path
     fill: $normal-color
@@ -18,16 +21,17 @@ svg
     user-select: none
 
 .selected-path
-    fill: $select-color
+    fill: $user-select-color
 
-text
-    pointer-events: none
+.code-selected-path-1
+    fill: $select-color-1
 
-.svg-base-text
-    font-size: 4px
-    fill: $text-color
-    stroke: $text-color
-    stroke-width: 0.2
+.code-selected-path-2
+    fill: $select-color-2
+
+// text
+//     pointer-events: none
+
 
 .svh-g-1
     display: inline
@@ -37,8 +41,26 @@ text
     fill: none
     stroke: #000000
     stroke-width: 0.264999
+    pointer-events: none
 
 .text-fill-path
     fill: none
     stroke: none
     stroke-width: 0
+
+//a
+
+.a-item-text
+    font-size: 4px
+    fill: $text-color 
+
+.a-item-text:hover
+    font-style: italic
+    font-size: 4.5px
+
+.a-item-selected
+    stroke: $item-stroke
+    stroke-width: 0.3
+    stroke: $item-stroke
+    
+
