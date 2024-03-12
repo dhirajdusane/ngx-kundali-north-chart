@@ -8,8 +8,9 @@
       <g inkscape:groupmode="layer" id="HouseWiseLayer" inkscape:label="HouseWiseLayer" class="svh-g-1">
          <ng-container *ngFor="let bhava of bhavas">
             <path [attr.d]="bhava.house.d" class="cH cH12" 
-            [class.code-selected-path-1]="bhava.house.isActive1"
-            [class.code-selected-path-2]="bhava.house.isActive2"
+            [class.code-selected-path-1]="bhava.house.Active[houseActiveType.ArgalaSelection]"
+            [class.code-selected-path-2]="bhava.house.Active[houseActiveType.VirodhaArgalaSelection]"
+            [class.code-selected-path-0]="bhava.house.Active[houseActiveType.UserSelection]"
             (click)="houseClick($event, bhava)" />
          </ng-container>
       </g>
@@ -51,8 +52,6 @@
             inkscape:label="TH9" />
       </g>
       <g inkscape:groupmode="layer" id="HouseLords" inkscape:label="HouseLords" class="svh-g-1">
-
-         <!-- Overlaying shapes -->
          <ng-container *ngFor="let bhava of bhavas">
             <text xml:space="preserve" class="house-lord-text" [attr.x]="bhava.rashi.X" [attr.y]="bhava.rashi.Y">
                <tspan sodipodi:role="line" class="house-lord-tspan" [attr.x]="bhava.rashi.X" [attr.y]="bhava.rashi.Y">
@@ -66,7 +65,7 @@
             <text>
                <textPath [attr.xlink:href]="bhava.pathName">
                   <tspan *ngFor="let item of bhava.items">
-                     <a class="a-item-text" (click)="itemClick($event,item)"> {{item.txt}} </a>
+                     <a class="a-item-text" [class.a-item-selected]="item.isActive" (click)="itemClick($event,item)"> {{item.txt}} </a>
                   </tspan>
                </textPath>
             </text>

@@ -1,8 +1,18 @@
-//import { Bhava } from "ngx-kundali-north-chart";
+import { OccupantType } from "./enums";
 
 export class Occupant{
     txt!:string;
-    isPlanet!:boolean;
-    //parentHouse!:Bhava;
-    isArudha!:boolean;
+    occupantType!:OccupantType;
+    bhavaIndex!:number;
+    isActive!:boolean;
+
+    constructor(name:string, oType:OccupantType,ix:number){
+        this.txt = name;
+        this.occupantType = oType;
+        this.bhavaIndex = ix;
+    }
+
+    resetState(){
+        this.isActive = false;
+    }
 }

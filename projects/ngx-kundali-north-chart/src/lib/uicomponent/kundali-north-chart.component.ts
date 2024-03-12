@@ -1,13 +1,18 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import { chartdata } from '../models/chartdata';
-import { Bhava, Occupant } from '../models/bhava';
-import { RashiUICoOrdinates } from '../models/rashielement';
+
+import { Bhava } from '../models/bhava';
+import { Rashi } from '../models/rashi';
+import { House } from '../models/house';
+import { Occupant } from '../models/occupant';
+
 import { PlanetService } from '../services/planet/planet.service';
 import { CalculationService } from '../services/displaycalculation/calculation.service';
-import { Rashi } from '../models/rashi';
-import { HouseSVGPaths } from '../models/houseelement';
-import { House } from '../models/house';
+
+import { RashiUICoOrdinates, HouseSVGPaths } from '../models/uiElements';
+import { HouseActiveType, OccupantType } from '../models/enums';
 
 @Component({
   selector: 'lib-kchart-north',
@@ -17,11 +22,15 @@ import { House } from '../models/house';
   styleUrl: './kundali-north-chart.component.sass'
 })
 export class KundaliNorthChartComponent implements OnInit {
+  
   @Input() data!: chartdata;
 
   bhavas: Bhava[] = [];
-  firstBhava!: Bhava;
+  planets: Occupant[] = [];
+  arudhas: Occupant[] = [];
+  houses: House[] = [];
 
+  houseActiveType = HouseActiveType;
   planetService: PlanetService
   calculationService: CalculationService
   constructor(planetService: PlanetService, calculationService: CalculationService) {
@@ -35,130 +44,93 @@ export class KundaliNorthChartComponent implements OnInit {
     if (this.data == undefined) return;
 
     this.constructLinkedList(this.data);
-    this.setBhavaData(this.data);
   }
 
   constructLinkedList(chData: chartdata) {
-    let previousBhava = this.firstBhava;
 
     for (let index = 0; index < 12; index++) {
-      const bhav = new Bhava();
-      bhav.index = index + 1;
-      bhav.pathName = "#TH" + bhav.index;
+      const rashi = new Rashi(RashiUICoOrdinates[index].X,
+        RashiUICoOrdinates[index].Y, (chData.lagna + index) % 12);
 
-      bhav.rashi = new Rashi();
-      bhav.rashi.rashiNumber = (chData.lagna + index) > 12 ? (chData.lagna + index) - 12 : (chData.lagna + index);
-      bhav.rashi.X = RashiUICoOrdinates[index].X;
-      bhav.rashi.Y = RashiUICoOrdinates[index].Y;
+      const house = new House(HouseSVGPaths[index].d);
+      const bhava = new Bhava("#TH" + (index + 1), rashi, house, index);
 
-      bhav.house = new House();
-      bhav.house.d = HouseSVGPaths[index].d;
-
-      if (previousBhava == undefined) {
-        this.firstBhava = bhav;
-      }
-      else {
-        bhav.previous = previousBhava;
-        previousBhava.next = bhav;
-      }
-      previousBhava = bhav;
-    }
-    previousBhava.next = this.firstBhava;
-    this.firstBhava.previous = previousBhava;
-    this.firstBhava.isLagna = true;
-    this.firstBhava.addOccupant("La");
-    console.log(this.firstBhava);
-  }
-
-  setBhavaData(chData: chartdata) {
-    this.bhavas = [];
-    let b = this.firstBhava;
-
-    for (let index = 0; index < 12; index++) {
-      this.bhavas.push(b);
-      b = b.next;
+      this.houses.push(house);
+      this.bhavas.push(bhava);
     }
 
     for (let i = 0; i < this.data.planets.length; i++) {
-      try {
-        this.bhavas[this.data.planets[i] - 1].addOccupant(this.planetService.getPlanetText(i))
-      } catch (error) {
-        console.log(error);
-      }
+      const o = this.bhavas[this.data.planets[i] - 1].addOccupant(
+        this.planetService.getPlanetText(i), OccupantType.Planet)
+      this.planets.push(o);
     }
 
-    let arudhas = this.calculationService.getArudhaPadaArray(this.data.planets, this.data.lagna);
-    console.log(arudhas);
-    //Set adrudha padas of all houses
+    const arudhas = this.calculationService.getArudhaPadaArray(this.data.planets, this.data.lagna);
     for (let i = 0; i < 12; i++) {
-      this.bhavas[arudhas[i] - 1].addOccupant(this.getBhavaArudha(i + 1));
+      const o = this.bhavas[arudhas[i] - 1].addOccupant(
+        this.getBhavaArudha(i + 1), OccupantType.Arudha);
+      this.arudhas.push(o);
     }
+
+    this.bhavas[0].addOccupant('Lagna',  OccupantType.Lagna );
   }
 
   getBhavaArudha(item: number) {
     if (item == 1)
-      return ' AL';
+      return ' AL ';
     else
-      return ' A' + item;
+      return ' A' + item + ' ';
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  previousTarget: any = undefined;
   houseClick(changes: any, b: Bhava) {
-    //debugger;
-
-    if (changes.currentTarget.classList.contains('selected-path')) {
-      changes.currentTarget.classList.remove('selected-path')
-    }
-    else {
-      if (this.previousTarget != undefined)
-        this.previousTarget.classList.remove('selected-path');
-
-      changes.currentTarget.classList.add('selected-path')
-      this.previousTarget = changes.currentTarget;
+    for (let i = 0; i < 12; i++) {
+      if (b.index == i) continue;
+      this.houses[i].resetUserSelection();
     }
 
-    //console.log(changes);
+    b.house.Active[HouseActiveType.UserSelection] = !b.house.Active[HouseActiveType.UserSelection];
   }
 
-  previousItem: any = undefined;
+  resetHouseState(skip: number = -1) {
+    for (let i = 0; i < 12; i++) {
+      if (i == skip) continue;
+      this.houses[i].resetState()
+    }
+  }
 
   itemClick(changes: any, o: Occupant) {
-    for (let i = 0; i < 12; i++) {
-      this.bhavas[i].house.isActive1 = false;
-      this.bhavas[i].house.isActive2 = false;
-    }
-    //debugger;
-    if (changes.currentTarget.classList.contains('a-item-selected')) {
-      changes.currentTarget.classList.remove('a-item-selected')
-    }
-    else {
-      if (this.previousItem != undefined)
-        this.previousItem.classList.remove('a-item-selected');
 
-      changes.currentTarget.classList.add('a-item-selected')
-      this.previousItem = changes.currentTarget;
-      this.addArgala(o);
+    if (o.occupantType != OccupantType.Planet) return;
+
+    this.resetHouseState();
+
+    for (let index = 0; index < this.planets.length; index++) {
+      if(o.txt == this.planets[index].txt) continue;
+      this.planets[index].isActive = false;
     }
-    //console.log(changes);
+
+    o.isActive = !o.isActive;
+    
+    if(o.isActive)
+      this.addArgala(o);
   }
 
   addArgala(o: Occupant) {
-    if (o.txt == 'Ke' || o.txt == 'Ra') {
-      for (const i of [2, 4, 5, 11]) {
-        o.parentHouse.getNext(i).house.isActive2 = true;
-      }
-      for (const i of [3, 10, 12]) {
-        o.parentHouse.getNext(i).house.isActive1 = true;
+
+    const func = (arr: number[], selection: HouseActiveType) => {
+      for (const i of arr) {
+        const ix = ((o.bhavaIndex + i - 1) % 12);
+        this.houses[ix].Active[selection] = true;
       }
     }
-    else if(!o.txt.startsWith('A')) {
-      for (const i of [2, 4, 5, 11]) {
-        o.parentHouse.getNext(i).house.isActive1 = true;
-      }
-      for (const i of [3, 10, 12]) {
-        o.parentHouse.getNext(i).house.isActive2 = true;
-      }
+
+    if (o.txt == 'Ke' || o.txt == 'Ra') {
+      func([2, 4, 5, 11], HouseActiveType.VirodhaArgalaSelection);
+      func([3, 10, 12], HouseActiveType.ArgalaSelection);
+    }
+    else {
+      func([2, 4, 5, 11], HouseActiveType.ArgalaSelection);
+      func([3, 10, 12], HouseActiveType.VirodhaArgalaSelection);
     }
   }
 }
