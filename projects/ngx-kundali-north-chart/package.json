@@ -1,22 +1,13 @@
 {
   "name": "ngx-kundali-north-chart",
-  "version": "1.24.7",
+  "version": "1.24.6",
   "author": "Dhiraj Dusane <dhirajdusane@gmail.com>",
-  "description": "Vedic Kundali North Indian Style chart component. Easily reusable. Astrology Diamond chart.",
+  "description": "Vedic Kundali North Indian Style chart component. Easily reusable.",
   "homepage": "https://www.vediccs.com/kundali-north",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dhirajdusane/ngx-kundali-north-chart.git"
   },
-  "keywords": [
-    "kundali",
-    "astrology",
-    "vedic",
-    "astro",
-    "horoscope",
-    "rashi",
-    "hindu"
-  ],
   "license": "Apache-2.0",
   "displayName": "Kundali chart North-Indian style",
   "peerDependencies": {
