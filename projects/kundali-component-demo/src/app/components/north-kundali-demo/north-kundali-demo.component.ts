@@ -14,9 +14,23 @@ import { AboutComponent } from '../about/about.component';
 })
 export class NorthKundaliDemoComponent {
   staticChartData!:chartdata;
+  jsonData!:string;
 
   constructor(){
     //JSON.parse()
-    this.staticChartData = jsonChartdata;// new chartdata();
+    //this.staticChartData = `{
+    //  "planets": [1,1,12,12,9,10,2,3,9],
+    //    "lagna": 9
+    //}` as chartdata ; //jsonChartdata;// new chartdata();
+
+    //this.jsonData =`{ "planets": [1,1,12,12,9,10,2,3,9], "lagna": 9 }`;
+    this.jsonData =`{ "planets": [1,11,8,12,9,1,4,12,6], "lagna": 6 }`;
+
+    this.staticChartData = JSON.parse(this.jsonData) as chartdata;
+}
+
+ApplyJson(){
+  console.log(this.jsonData);
+  this.staticChartData = JSON.parse(this.jsonData) as chartdata;
 }
 }

@@ -8,5 +8,6 @@ export enum OccupantType {
 export enum HouseActiveType {
     UserSelection,
     ArgalaSelection,
-    VirodhaArgalaSelection
+    VirodhaArgalaSelection,
+    RashiDrishtiSelection
 }

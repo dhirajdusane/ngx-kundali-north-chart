@@ -7,11 +7,12 @@
       <defs id="defs1" />
       <g inkscape:groupmode="layer" id="HouseWiseLayer" inkscape:label="HouseWiseLayer" class="svh-g-1">
          <ng-container *ngFor="let bhava of bhavas">
-            <path [attr.d]="bhava.house.d" class="cH cH12" 
-            [class.code-selected-path-1]="bhava.house.Active[houseActiveType.ArgalaSelection]"
-            [class.code-selected-path-2]="bhava.house.Active[houseActiveType.VirodhaArgalaSelection]"
-            [class.code-selected-path-0]="bhava.house.Active[houseActiveType.UserSelection]"
-            (click)="houseClick($event, bhava)" />
+            <path [attr.d]="bhava.house.d" class="cH cH12"
+               [class.code-selected-path-1]="bhava.house.Active[houseActiveType.ArgalaSelection]"
+               [class.code-selected-path-2]="bhava.house.Active[houseActiveType.VirodhaArgalaSelection]"
+               [class.code-selected-path-3]="bhava.house.Active[houseActiveType.RashiDrishtiSelection]"
+               [class.code-selected-path-0]="bhava.house.Active[houseActiveType.UserSelection]"
+               (click)="houseClick($event, bhava)" />
          </ng-container>
       </g>
       <g inkscape:groupmode="layer" id="FillPath" inkscape:label="FillPath" class="svh-g-1">
@@ -65,11 +66,20 @@
             <text>
                <textPath [attr.xlink:href]="bhava.pathName">
                   <tspan *ngFor="let item of bhava.items">
-                     <a class="a-item-text" [class.a-item-selected]="item.isActive" (click)="itemClick($event,item)"> {{item.txt}} </a>
+                     <a class="a-item-text" [class.a-item-selected]="item.isActive" (click)="itemClick($event,item)">
+                        {{item.txt}} </a>
                   </tspan>
                </textPath>
             </text>
          </ng-container>
       </g>
    </svg>
+   <div style="display: flex;">
+      <th class="planet-mode">Graha Drishti</th>
+         <label class="switch">
+            <input #grahaDrishtiModeChk type="checkbox" [checked]="grahaDrishtiMode" (change)="onGrahaDrishtiMode(grahaDrishtiModeChk.checked)" >
+            <span class="slider round"></span>
+         </label>
+         <th class="planet-mode">Argala</th>
+   </div>
 </div>

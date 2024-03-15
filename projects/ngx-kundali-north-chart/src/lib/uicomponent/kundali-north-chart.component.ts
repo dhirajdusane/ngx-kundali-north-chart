@@ -1,6 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { chartdata } from '../models/chartdata';
 
 import { Bhava } from '../models/bhava';
@@ -13,22 +12,25 @@ import { CalculationService } from '../services/displaycalculation/calculation.s
 
 import { RashiUICoOrdinates, HouseSVGPaths } from '../models/uiElements';
 import { HouseActiveType, OccupantType } from '../models/enums';
+import { flatMap } from 'rxjs';
 
 @Component({
   selector: 'lib-kchart-north',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './kundali-north-chart.component.html',
-  styleUrl: './kundali-north-chart.component.sass'
+  styleUrls: ['./kundali-north-chart.component.sass', './slider.scss']
 })
-export class KundaliNorthChartComponent implements OnInit {
-  
+export class KundaliNorthChartComponent implements OnInit, OnChanges {
+
   @Input() data!: chartdata;
 
-  bhavas: Bhava[] = [];
-  planets: Occupant[] = [];
-  arudhas: Occupant[] = [];
-  houses: House[] = [];
+  grahaDrishtiMode: boolean = false;
+
+  bhavas!: Bhava[];
+  planets!: Occupant[];
+  arudhas!: Occupant[];
+  houses!: House[];
 
   houseActiveType = HouseActiveType;
   planetService: PlanetService
@@ -46,7 +48,16 @@ export class KundaliNorthChartComponent implements OnInit {
     this.constructLinkedList(this.data);
   }
 
+  ngOnChanges(changes: any) {
+    this.constructLinkedList(this.data);
+  }
+
   constructLinkedList(chData: chartdata) {
+
+    this.bhavas = [];
+    this.planets = [];
+    this.arudhas = [];
+    this.houses = [];
 
     for (let index = 0; index < 12; index++) {
       const rashi = new Rashi(RashiUICoOrdinates[index].X,
@@ -66,18 +77,21 @@ export class KundaliNorthChartComponent implements OnInit {
     }
 
     const arudhas = this.calculationService.getArudhaPadaArray(this.data.planets, this.data.lagna);
+    console.log(arudhas);
     for (let i = 0; i < 12; i++) {
       const o = this.bhavas[arudhas[i] - 1].addOccupant(
         this.getBhavaArudha(i + 1), OccupantType.Arudha);
       this.arudhas.push(o);
     }
 
-    this.bhavas[0].addOccupant('Lagna',  OccupantType.Lagna );
+    this.bhavas[0].addOccupant('Lagna', OccupantType.Lagna);
   }
 
   getBhavaArudha(item: number) {
     if (item == 1)
       return ' AL ';
+    else if (item == 12)
+      return ' UL ';
     else
       return ' A' + item + ' ';
   }
@@ -89,6 +103,7 @@ export class KundaliNorthChartComponent implements OnInit {
     }
 
     b.house.Active[HouseActiveType.UserSelection] = !b.house.Active[HouseActiveType.UserSelection];
+    this.setRashiDrishti(b);
   }
 
   resetHouseState(skip: number = -1) {
@@ -105,33 +120,95 @@ export class KundaliNorthChartComponent implements OnInit {
     this.resetHouseState();
 
     for (let index = 0; index < this.planets.length; index++) {
-      if(o.txt == this.planets[index].txt) continue;
+      if (o.txt == this.planets[index].txt) continue;
       this.planets[index].isActive = false;
     }
 
     o.isActive = !o.isActive;
-    
-    if(o.isActive)
-      this.addArgala(o);
+
+    if (o.isActive) {
+      if (this.grahaDrishtiMode)
+        this.addArgala(o);
+      else
+        this.grahaDrishti(o);
+    }
+  }
+
+  grahaDrishti(o: Occupant) {
+
+    if (o.txt == 'Ke' || o.txt == 'Ra' || o.txt == 'Ju')
+      this.selectHouseBasedOnArray(o, [5, 7, 9], HouseActiveType.ArgalaSelection);
+    else if (o.txt == 'Sa')
+      this.selectHouseBasedOnArray(o, [3, 7, 10], HouseActiveType.ArgalaSelection);
+    else if (o.txt == 'Ma')
+      this.selectHouseBasedOnArray(o, [4, 7, 8], HouseActiveType.ArgalaSelection);
+    else
+      this.selectHouseBasedOnArray(o, [7], HouseActiveType.ArgalaSelection);
   }
 
   addArgala(o: Occupant) {
 
-    const func = (arr: number[], selection: HouseActiveType) => {
-      for (const i of arr) {
-        const ix = ((o.bhavaIndex + i - 1) % 12);
-        this.houses[ix].Active[selection] = true;
-      }
-    }
-
     if (o.txt == 'Ke' || o.txt == 'Ra') {
-      func([2, 4, 5, 11], HouseActiveType.VirodhaArgalaSelection);
-      func([3, 10, 12], HouseActiveType.ArgalaSelection);
+      this.selectHouseBasedOnArray(o, [2, 4, 5, 11], HouseActiveType.VirodhaArgalaSelection);
+      this.selectHouseBasedOnArray(o, [3, 10, 12], HouseActiveType.ArgalaSelection);
     }
     else {
-      func([2, 4, 5, 11], HouseActiveType.ArgalaSelection);
-      func([3, 10, 12], HouseActiveType.VirodhaArgalaSelection);
+      this.selectHouseBasedOnArray(o, [2, 4, 5, 11], HouseActiveType.ArgalaSelection);
+      this.selectHouseBasedOnArray(o, [3, 10, 12], HouseActiveType.VirodhaArgalaSelection);
+    }
+  }
+
+  selectHouseBasedOnArray(o: Occupant, arr: number[], selection: HouseActiveType) {
+
+    for (const i of arr) {
+      const ix = ((o.bhavaIndex + i - 1) % 12);
+      this.houses[ix].Active[selection] = true;
+
+    }
+  }
+
+  onGrahaDrishtiMode(checked: boolean) {
+    this.grahaDrishtiMode = checked;
+
+    const getActiveOccupant = (element: Occupant) => element.isActive;
+
+    const activeOccupant = this.planets.find(getActiveOccupant);
+
+    if (activeOccupant != undefined)
+      this.itemClick(null, activeOccupant as Occupant);
+  }
+
+
+  setRashiDrishti(b: Bhava) {
+    for (let i = 0; i < 12; i++) {
+      this.houses[i].Active[HouseActiveType.RashiDrishtiSelection] = false;
+    }
+
+    if (!b.house.Active[HouseActiveType.UserSelection])
+      return;
+
+
+    //const swabhav = ['c', 's', 'd',]
+    //const chara = [1, 4, 7, 10];
+    //const sthir = [2, 5, 8, 11]
+    //const dual = [3,6,9,12]
+
+    //Dual
+    if (b.rashi.rashiNumber % 3 == 0) {
+      this.bhavas[((b.index + 3) % 12)].house.Active[HouseActiveType.RashiDrishtiSelection] = true;
+      this.bhavas[((b.index + 6) % 12)].house.Active[HouseActiveType.RashiDrishtiSelection] = true;
+      this.bhavas[((b.index + 9) % 12)].house.Active[HouseActiveType.RashiDrishtiSelection] = true;
+    }
+    //Chara
+    else if ((b.rashi.rashiNumber - 1) % 3 == 0) {
+      this.bhavas[((b.index + 1 + 3) % 12)].house.Active[HouseActiveType.RashiDrishtiSelection] = true;
+      this.bhavas[((b.index + 1 + 6) % 12)].house.Active[HouseActiveType.RashiDrishtiSelection] = true;
+      this.bhavas[((b.index + 1 + 9) % 12)].house.Active[HouseActiveType.RashiDrishtiSelection] = true;
+    }
+    else {
+      this.bhavas[((b.index + 2) % 12)].house.Active[HouseActiveType.RashiDrishtiSelection] = true;
+      this.bhavas[((b.index + 5) % 12)].house.Active[HouseActiveType.RashiDrishtiSelection] = true;
+      this.bhavas[((b.index + 8) % 12)].house.Active[HouseActiveType.RashiDrishtiSelection] = true;
     }
   }
 }
-
