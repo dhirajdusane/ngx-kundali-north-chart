@@ -12,25 +12,7 @@ export class CalculationService {
     else if (index < 0) return index * -1;
     else return index;
   }
-
-  // getBhavaRashiArray(lagna: number) {
-  //   const bavaRashis: number[] = [];
-  //   for (let i = 0; i < 12; i++) {
-  //     bavaRashis.push(this.normalizeTo12(i + lagna))
-  //   }
-  //   return bavaRashis;
-  // }
-
-  //getArudhaPada(houseNumber: number, planetHouseNumber: number) {
-  //  if (planetHouseNumber == houseNumber ||
-  //     this.normalizeTo12(houseNumber + 6) == planetHouseNumber)
-  //    return this.normalizeTo12(planetHouseNumber + 9);
-  //
-  //  console.log('houeNumber : '+ houseNumber + ' planetHouse :' + planetHouseNumber);
-  //
-  //  return this.normalizeTo12(((planetHouseNumber - houseNumber) + planetHouseNumber))
-  //}
-
+  
   getArudhaPadaArray(planets: number[], lagna: number) {
     const arudhas: number[] = [];
     for (let houseIndex = 0; houseIndex < 12; houseIndex++) {

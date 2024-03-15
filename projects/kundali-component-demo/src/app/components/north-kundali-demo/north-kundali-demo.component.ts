@@ -23,8 +23,10 @@ export class NorthKundaliDemoComponent {
     //    "lagna": 9
     //}` as chartdata ; //jsonChartdata;// new chartdata();
 
-    //this.jsonData =`{ "planets": [1,1,12,12,9,10,2,3,9], "lagna": 9 }`;
-    this.jsonData =`{ "planets": [1,11,8,12,9,1,4,12,6], "lagna": 6 }`;
+    //this.jsonData =`{ "planets": [1,1,12,12,9,10,2,3,9], "lagna": 9 }`;//Demo
+    //this.jsonData =`{ "planets": [1,11,8,12,9,1,4,12,6], "lagna": 6 }`;//D-10
+    //this.jsonData =`{ "planets": [12,12,11,12,8,1,10,7,7], "lagna": 7 }`;//D-2
+    //this.jsonData =`{ "planets": [12,12,12,12,10,1,11,4,10], "lagna": 10 }`;//D-1
 
     this.staticChartData = JSON.parse(this.jsonData) as chartdata;
 }

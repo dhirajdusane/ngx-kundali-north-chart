@@ -14,25 +14,41 @@ describe('CalculationService', () => {
     expect(service).toBeTruthy();
   });
 
-//  it('normal arudha pada should be correct',() => {
-//    let arudha = service.getArudhaPada(5,6);
-//    expect(arudha).toBe(7);
-//
-//    arudha = service.getArudhaPada(10,12);
-//    expect(arudha).toBe(2);
-//  })
-//
-//  it('arudha pada and planet in same house should be correct',() => {
-//    const arudha = service.getArudhaPada(5,5);
-//    expect(arudha).toBe(2);
-//  })
-//
-//  it('arudha pada and planet in sama sptaka should be correct',() => {
-//    const arudha = service.getArudhaPada(12,6);
-//    expect(arudha).toBe(9);
-//  })
-//
-  it('arudha pada array should not have negative number',() => {
+  describe('getArudhaPadaArray', () => {
+    it('case-1 should return the correct Arudha Pada array for valid input', () => {
+      // Arrange
+      const planets = [1,11,8,12,9,1,4,12,6];
+      const lagna = 6; // Assuming lagna is 1 for this test case
+      const expectedArudhaPadaArray = [3, 10, 6, 10, 3, 2, 4, 10, 3, 6, 8, 2];
+
+      // Act
+      const result = service.getArudhaPadaArray(planets, lagna);
+
+      // Assert
+      expect(result).toEqual(expectedArudhaPadaArray);
+    });
+
+    // Add more test cases for different scenarios
+  });
+
+  describe('getArudhaPadaArray', () => {
+    it('case-2 should return the correct Arudha Pada array for valid input', () => {
+      // Arrange
+      const planets = [1,11,8,12,9,1,4,12,6];
+      const lagna = 6; // Assuming lagna is 1 for this test case
+      const expectedArudhaPadaArray = [3, 10, 6, 10, 3, 2, 4, 10, 3, 6, 8, 2];
+
+      // Act
+      const result = service.getArudhaPadaArray(planets, lagna);
+
+      // Assert
+      expect(result).toEqual(expectedArudhaPadaArray);
+    });
+
+    // Add more test cases for different scenarios
+  });
+
+  it('case-1 arudha pada array should not have negative number',() => {
     const arudha = service.getArudhaPadaArray([1,11,8,12,9,1,4,12,6],6);
     expect(arudha.length).toBe(12)
     arudha.forEach(element => {
