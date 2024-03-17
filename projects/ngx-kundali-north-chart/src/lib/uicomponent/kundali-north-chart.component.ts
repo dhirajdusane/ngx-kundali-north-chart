@@ -12,7 +12,6 @@ import { CalculationService } from '../services/displaycalculation/calculation.s
 
 import { RashiUICoOrdinates, HouseSVGPaths } from '../models/uiElements';
 import { HouseActiveType, OccupantType } from '../models/enums';
-import { flatMap } from 'rxjs';
 
 @Component({
   selector: 'lib-kchart-north',
@@ -20,6 +19,7 @@ import { flatMap } from 'rxjs';
   imports: [CommonModule],
   templateUrl: './kundali-north-chart.component.html',
   styleUrls: ['./kundali-north-chart.component.sass', './slider.scss']
+
 })
 export class KundaliNorthChartComponent implements OnInit, OnChanges {
 
@@ -33,6 +33,8 @@ export class KundaliNorthChartComponent implements OnInit, OnChanges {
   houses!: House[];
 
   houseActiveType = HouseActiveType;
+  occupantType = OccupantType;
+
   planetService: PlanetService
   calculationService: CalculationService
   constructor(planetService: PlanetService, calculationService: CalculationService) {
@@ -84,16 +86,38 @@ export class KundaliNorthChartComponent implements OnInit, OnChanges {
       this.arudhas.push(o);
     }
 
-    this.bhavas[0].addOccupant('Lagna', OccupantType.Lagna);
+    this.bhavas[0].addOccupant('A', OccupantType.Lagna);
   }
 
   getBhavaArudha(item: number) {
-    if (item == 1)
-      return ' AL ';
-    else if (item == 12)
-      return ' UL ';
-    else
-      return ' A' + item + ' ';
+    switch (item) {
+      case 1:
+        return 'K';
+      case 2:
+        return 'L';
+      case 3:
+        return 'M';
+      case 4:
+        return 'N';
+      case 5:
+        return 'O';
+      case 6:
+        return 'P';
+      case 7:
+        return 'Q';
+      case 8:
+        return 'R';
+      case 9:
+        return 'S';
+      case 10:
+        return 'T';
+      case 11:
+        return 'U';
+      case 12:
+        return 'V';
+    }
+
+    return '';
   }
 
   houseClick(changes: any, b: Bhava) {
@@ -187,28 +211,27 @@ export class KundaliNorthChartComponent implements OnInit, OnChanges {
     if (!b.house.Active[HouseActiveType.UserSelection])
       return;
 
-
     //const swabhav = ['c', 's', 'd',]
     //const chara = [1, 4, 7, 10];
     //const sthir = [2, 5, 8, 11]
     //const dual = [3,6,9,12]
 
-    //Dual
+    //dual
     if (b.rashi.rashiNumber % 3 == 0) {
-      this.bhavas[((b.index + 3) % 12)].house.Active[HouseActiveType.RashiDrishtiSelection] = true;
-      this.bhavas[((b.index + 6) % 12)].house.Active[HouseActiveType.RashiDrishtiSelection] = true;
-      this.bhavas[((b.index + 9) % 12)].house.Active[HouseActiveType.RashiDrishtiSelection] = true;
+      [3, 6, 9].forEach((x) => {
+        this.bhavas[((b.index + x) % 12)].house.Active[HouseActiveType.RashiDrishtiSelection] = true;
+      });
     }
     //Chara
     else if ((b.rashi.rashiNumber - 1) % 3 == 0) {
-      this.bhavas[((b.index + 1 + 3) % 12)].house.Active[HouseActiveType.RashiDrishtiSelection] = true;
-      this.bhavas[((b.index + 1 + 6) % 12)].house.Active[HouseActiveType.RashiDrishtiSelection] = true;
-      this.bhavas[((b.index + 1 + 9) % 12)].house.Active[HouseActiveType.RashiDrishtiSelection] = true;
+      [4, 7, 10].forEach((x) => {
+        this.bhavas[((b.index + x) % 12)].house.Active[HouseActiveType.RashiDrishtiSelection] = true;
+      });
     }
     else {
-      this.bhavas[((b.index + 2) % 12)].house.Active[HouseActiveType.RashiDrishtiSelection] = true;
-      this.bhavas[((b.index + 5) % 12)].house.Active[HouseActiveType.RashiDrishtiSelection] = true;
-      this.bhavas[((b.index + 8) % 12)].house.Active[HouseActiveType.RashiDrishtiSelection] = true;
+      [2, 5, 8].forEach((x) => {
+        this.bhavas[((b.index + x) % 12)].house.Active[HouseActiveType.RashiDrishtiSelection] = true;
+      });
     }
   }
 }

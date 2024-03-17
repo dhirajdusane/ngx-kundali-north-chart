@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatCardModule} from '@angular/material/card';
+
 import { KundaliNorthChartComponent, chartdata } from 'ngx-kundali-north-chart';
 import * as jsonChartdata from './dhiruBhaiV2.json'
 import { AboutComponent } from '../about/about.component';
@@ -29,10 +30,22 @@ export class NorthKundaliDemoComponent {
     //this.jsonData =`{ "planets": [12,12,12,12,10,1,11,4,10], "lagna": 10 }`;//D-1
 
     this.staticChartData = JSON.parse(this.jsonData) as chartdata;
+    const a = new dictionary();
+    a['a'] = 4;
+    a['b'] = 5;
+
+    console.log(a);
+    console.log(a['b']);
+    console.log(a['c']);
+    // ['a',2,'d',4];
 }
 
 ApplyJson(){
   console.log(this.jsonData);
   this.staticChartData = JSON.parse(this.jsonData) as chartdata;
 }
+}
+
+class dictionary{
+  [abc:string]: number;
 }

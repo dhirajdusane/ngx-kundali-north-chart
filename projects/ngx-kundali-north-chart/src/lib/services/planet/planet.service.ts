@@ -10,31 +10,31 @@ export class PlanetService {
   getPlanetText(num: number) {
     switch (num) {
       case 0:
-        return 'Su';
+        return 'B';
 
       case 1:
-        return 'Mo';
+        return 'C';
 
       case 2:
-        return 'Me';
+        return 'D';
 
       case 3:
-        return 'Ve';
+        return 'E';
 
       case 4:
-        return 'Ma';
+        return 'F';
 
       case 5:
-        return 'Ju';
+        return 'G';
 
       case 6:
-        return 'Sa';
+        return 'H';
 
       case 7:
-        return 'Ra';
+        return 'I';
 
       case 8:
-        return 'Ke';
+        return 'J';
     }
 
     return '';

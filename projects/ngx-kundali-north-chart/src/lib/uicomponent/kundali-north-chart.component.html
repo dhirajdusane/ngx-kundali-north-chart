@@ -66,7 +66,9 @@
             <text>
                <textPath [attr.xlink:href]="bhava.pathName">
                   <tspan *ngFor="let item of bhava.items">
-                     <a class="a-item-text" [class.a-item-selected]="item.isActive" (click)="itemClick($event,item)">
+                     <a [ngClass]="{'a-item-text-lagna':item.occupantType === occupantType.Lagna, 'a-item-text':item.occupantType === occupantType.Planet ,'a-item-text-arudha':item.occupantType === occupantType.Arudha }"
+                        class="a-item-text-lagna" [class.a-item-selected]="item.isActive"
+                        (click)="itemClick($event,item)">
                         {{item.txt}} </a>
                   </tspan>
                </textPath>
@@ -76,10 +78,11 @@
    </svg>
    <div style="display: flex;">
       <th class="planet-mode">Graha Drishti</th>
-         <label class="switch">
-            <input #grahaDrishtiModeChk type="checkbox" [checked]="grahaDrishtiMode" (change)="onGrahaDrishtiMode(grahaDrishtiModeChk.checked)" >
-            <span class="slider round"></span>
-         </label>
-         <th class="planet-mode">Argala</th>
+      <label class="switch">
+         <input #grahaDrishtiModeChk type="checkbox" [checked]="grahaDrishtiMode"
+            (change)="onGrahaDrishtiMode(grahaDrishtiModeChk.checked)">
+         <span class="slider round"></span>
+      </label>
+      <th class="planet-mode">Argala</th>
    </div>
 </div>

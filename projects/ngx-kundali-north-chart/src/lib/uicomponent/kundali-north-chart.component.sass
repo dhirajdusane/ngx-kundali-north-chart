@@ -3,6 +3,8 @@ $border-color: #DEDEDE
 $normal-color: #FDFAF2
 $user-select-color: #F1B076
 $text-color: #b82960
+$arudha-text-color: #F28B27
+$lagna-text-color: #FF0004
 $item-stroke: #000000
 $select-color-1: #FFADC7
 $select-color-2: #BDBCBC
@@ -54,18 +56,29 @@ svg
 
 //a
 
+@font-face 
+    font-family: cfont
+    src: url('circle1.woff2') format('woff2')
+    
 .a-item-text
-    font-size: 4px
+    font-family: cfont
+    font-size: 7px
     fill: $text-color 
 
+.a-item-text-arudha
+    @extend .a-item-text
+    fill: $arudha-text-color
+
+.a-item-text-lagna
+    @extend .a-item-text
+    fill: $lagna-text-color
+
 .a-item-text:hover
-    stroke-width: 0.4
-    font-size: 4.5px
-    stroke: $item-stroke
+    font-size: 7.5px
+    fill: $item-stroke
 
 .a-item-selected
-    stroke: $item-stroke
-    stroke-width: 0.3
+    fill: $item-stroke
     
 .planet-mode
     margin: 3px
