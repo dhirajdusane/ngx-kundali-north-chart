@@ -160,11 +160,11 @@ export class KundaliNorthChartComponent implements OnInit, OnChanges {
 
   grahaDrishti(o: Occupant) {
 
-    if (o.txt == 'Ke' || o.txt == 'Ra' || o.txt == 'Ju')
+    if (o.txt == 'I' || o.txt == 'J' || o.txt == 'G')
       this.selectHouseBasedOnArray(o, [5, 7, 9], HouseActiveType.ArgalaSelection);
-    else if (o.txt == 'Sa')
+    else if (o.txt == 'H')
       this.selectHouseBasedOnArray(o, [3, 7, 10], HouseActiveType.ArgalaSelection);
-    else if (o.txt == 'Ma')
+    else if (o.txt == 'F')
       this.selectHouseBasedOnArray(o, [4, 7, 8], HouseActiveType.ArgalaSelection);
     else
       this.selectHouseBasedOnArray(o, [7], HouseActiveType.ArgalaSelection);
@@ -172,7 +172,7 @@ export class KundaliNorthChartComponent implements OnInit, OnChanges {
 
   addArgala(o: Occupant) {
 
-    if (o.txt == 'Ke' || o.txt == 'Ra') {
+    if (o.txt == 'I' || o.txt == 'J') {
       this.selectHouseBasedOnArray(o, [2, 4, 5, 11], HouseActiveType.VirodhaArgalaSelection);
       this.selectHouseBasedOnArray(o, [3, 10, 12], HouseActiveType.ArgalaSelection);
     }
