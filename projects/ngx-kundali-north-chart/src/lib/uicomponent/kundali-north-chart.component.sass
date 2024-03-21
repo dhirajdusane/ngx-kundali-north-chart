@@ -4,11 +4,12 @@ $normal-color: #FDFAF2
 $user-select-color: #F1B076
 $text-color: #b82960
 $arudha-text-color: #F28B27
+$arudha-text-color-pada: #717e7c91
 $lagna-text-color: #FF0004
 $item-stroke: #000000
-$select-color-1: #FFADC7
-$select-color-2: #BDBCBC
-$select-color-3: #CEFFB5
+$select-color-1: #fdd4e1
+$select-color-2: #d6d4d4
+$select-color-3: #d9ffc5
 
 path
     fill: $normal-color
@@ -58,7 +59,7 @@ svg
 
 @font-face 
     font-family: cfont
-    src: url('circle1.woff2') format('woff2')
+    src: url('KCircle.woff2') format('woff2')
     
 .a-item-text
     font-family: cfont
@@ -69,12 +70,16 @@ svg
     @extend .a-item-text
     fill: $arudha-text-color
 
+.a-item-text-arudha-pada
+    @extend .a-item-text
+    fill: $arudha-text-color-pada
+
 .a-item-text-lagna
     @extend .a-item-text
     fill: $lagna-text-color
 
 .a-item-text:hover
-    font-size: 7.5px
+    font-size: 7px
     fill: $item-stroke
 
 .a-item-selected

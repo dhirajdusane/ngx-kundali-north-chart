@@ -28,7 +28,7 @@ export class CalculationService {
         distance = -9;
 
       const arudha = (rashiLordPlanetIndex + distance) % 12;
-      arudhas.push((arudha < 0 ? arudha + 12 : arudha));
+      arudhas.push((arudha <= 0 ? arudha + 12 : arudha));
       //console.log('a: ' + rashi + ' b: ' + rashiLordIndex + ' c: ' + rashiLordPlanetIndex);
       //console.log('distance ' + distance);
       //console.log('house ' + houseIndex + ' distance ' + distance + ' arudha: ' + (arudha < 0 ? arudha + 12 : arudha));

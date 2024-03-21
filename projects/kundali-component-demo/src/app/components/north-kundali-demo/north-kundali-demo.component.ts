@@ -3,7 +3,6 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatCardModule} from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
 import { KundaliNorthChartComponent, chartdata } from 'ngx-kundali-north-chart';
-import * as jsonChartdata from './dhiruBhaiV2.json'
 import { AboutComponent } from '../about/about.component';
 
 @Component({
@@ -18,16 +17,13 @@ export class NorthKundaliDemoComponent implements OnChanges,OnInit {
   jsonData!:string;
 
   constructor(){
-    //JSON.parse()
-    //this.staticChartData = `{
-    //  "planets": [1,1,12,12,9,10,2,3,9],
-    //    "lagna": 9
-    //}` as chartdata ; //jsonChartdata;// new chartdata();
-
-    this.jsonData =`{ "planets": [1,1,12,12,9,10,2,3,9], "lagna": 9 }`;//Demo
-    //this.jsonData =`{ "planets": [1,11,8,12,9,1,4,12,6], "lagna": 6 }`;//D-10
+    //this.jsonData =`{ "planets": [1,1,12,12,9,10,2,3,9], "lagna": 9 }`;//Demo
+    this.jsonData =`{ "planets": [1,11,8,12,9,1,4,12,6], "lagna": 6 }`;//D-10
     //this.jsonData =`{ "planets": [12,12,11,12,8,1,10,7,7], "lagna": 7 }`;//D-2
     //this.jsonData =`{ "planets": [12,12,12,12,10,1,11,4,10], "lagna": 10 }`;//D-1
+    //this.jsonData =`{ "planets": [3,12,6,11,9,1,11,6,12], "lagna": 4 }`;//D-4-Tithi-Pravesh
+    //this.jsonData =`{ "planets": [12,9,6,12,10,1,5,10,4], "lagna": 7 }`;//D-4
+    //this.jsonData =`{ "planets": [11,9,3,11,5,10,7,1,7], "lagna": 8 }`;//D-10-Tithi-Pravesh
 
     
     const a = new dictionary();

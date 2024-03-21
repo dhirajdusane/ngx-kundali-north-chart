@@ -72,52 +72,29 @@ export class KundaliNorthChartComponent implements OnInit, OnChanges {
       this.bhavas.push(bhava);
     }
 
+    const planet = 'B'.charCodeAt(0);
     for (let i = 0; i < this.data.planets.length; i++) {
       const o = this.bhavas[this.data.planets[i] - 1].addOccupant(
-        this.planetService.getPlanetText(i), OccupantType.Planet)
+        String.fromCharCode(planet + i), OccupantType.Planet)
       this.planets.push(o);
     }
 
+    let arudhaAscii = 'K'.charCodeAt(0);
     const arudhas = this.calculationService.getArudhaPadaArray(this.data.planets, this.data.lagna);
     console.log(arudhas);
-    for (let i = 0; i < 12; i++) {
-      const o = this.bhavas[arudhas[i] - 1].addOccupant(
-        this.getBhavaArudha(i + 1), OccupantType.Arudha);
+    for (let i = 0; i < 12; i++,arudhaAscii++) {
+      const o = this.bhavas[arudhas[i]-1].addOccupant(
+        String.fromCharCode(arudhaAscii) , OccupantType.Arudha);
       this.arudhas.push(o);
     }
 
-    this.bhavas[0].addOccupant('A', OccupantType.Lagna);
-  }
-
-  getBhavaArudha(item: number) {
-    switch (item) {
-      case 1:
-        return 'K';
-      case 2:
-        return 'L';
-      case 3:
-        return 'M';
-      case 4:
-        return 'N';
-      case 5:
-        return 'O';
-      case 6:
-        return 'P';
-      case 7:
-        return 'Q';
-      case 8:
-        return 'R';
-      case 9:
-        return 'S';
-      case 10:
-        return 'T';
-      case 11:
-        return 'U';
-      case 12:
-        return 'V';
+    let apada = 'a'.charCodeAt(0) - 1;
+    for (let index = 0, j = arudhas[0]-1; index < 12; index++, j++, apada++) {
+      if(index == 0) continue;
+      this.bhavas[j%12].addOccupant(String.fromCharCode(apada), OccupantType.ArudhaPada); 
     }
 
-    return '';
+    this.bhavas[0].addOccupant('A', OccupantType.Lagna);
   }
 
   houseClick(changes: any, b: Bhava) {

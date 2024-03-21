@@ -1,6 +1,7 @@
 export enum OccupantType {
     Planet, 
     Arudha, 
+    ArudhaPada, 
     Lagna
   }
 
